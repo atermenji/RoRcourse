@@ -17,7 +17,7 @@ class TimeUtils
 
 end
 
-# Modify method (#method_name) from class (#cls_name)
+# Modify method (#method_name) from class (#cls)
 def modify(cls, method_name)
 
 	cls.send :define_method, method_name do

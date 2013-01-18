@@ -1,17 +1,7 @@
 class TimeUtils
 
-	@@days = [
-		"Sunday",
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday"
-	]
-
 	def week_day
-		@@days[Time.new.wday]	
+		Time.new.strftime("%A")	
 	end
 
 end

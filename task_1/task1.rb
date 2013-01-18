@@ -11,8 +11,7 @@ class TimeUtils
 	]
 
 	def week_day
-		time = Time.new
-		return @@days[time.wday]	
+		@@days[Time.new.wday]	
 	end
 
 end
@@ -21,7 +20,7 @@ end
 def modify(cls, method_name)
 
 	cls.send :define_method, method_name do
-  		return "Your \"#{method_name}\" method was hacked!!!11"
+  		"Your \"#{method_name}\" method was hacked!!!11"
 	end
 
 end

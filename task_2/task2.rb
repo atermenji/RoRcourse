@@ -22,12 +22,12 @@ class StringUtils
 	end
 
 	def longest_word
-		words = input.gsub(/http[^\s]*/, '').gsub(/[_\d-]/, ' ')
-		words.split.sort_by(&:length)[-1]
+		words = input.gsub(/http[^\s]*/, '').scan(/[a-zA-Z]+/)
+		words.sort_by(&:length).last
 	end
 
 	def longest_digit_count
-		input.scan(/\d+/).sort_by(&:length)[-1].length
+		input.scan(/\d+/).sort_by(&:length).last.length
 	end
 
 	def root_urls

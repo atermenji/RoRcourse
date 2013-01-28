@@ -22,7 +22,6 @@ class StringUtils
 	end
 
 	def longest_word
-		words = input.gsub(/http[^\s]*/, '').scan(/[a-zA-Z]+/)
 		words.sort_by(&:length).last
 	end
 
@@ -34,6 +33,16 @@ class StringUtils
 		input.scan(/http:\/\/[^\/]*/)
 	end
 
+	def words_table
+		words_table = Hash.new(0)
+		words.each do |word| words_table[word.downcase] += 1; end
+		return words_table.sort_by{|key, value| value}.reverse
+	end
+
+	def words
+		input.gsub(/http[^\s]*/, '').scan(/[a-zA-Z]+/)
+	end
+
 end
 
 #========================================
@@ -41,5 +50,6 @@ end
 task2 = StringUtils.new(input)
 
 puts "Longest word is: #{task2.longest_word}"
-puts "Longest digit count : #{task2.longest_digit_count}"
+puts "Longest digit count: #{task2.longest_digit_count}"
 puts "Root urls: #{task2.root_urls}"
+task2.words_table.each do |word| puts "#{word}"; end

@@ -18,8 +18,8 @@ class Car
   end
 
   def engine_info
-    attribute_undefined!(:engine) if @engine == nil
-    attribute_undefined!(:size) if @size == nil
+    undefined_attribute!(:engine) if @engine == nil
+    undefined_attribute!(:size) if @size == nil
         
     return "Turbo #{@engine} engine #{@size.to_f}" if @turbo
     return "#{size.to_f} #{@engine.capitalize} engine"
@@ -29,7 +29,7 @@ class Car
     raise NoSuchAttributeException.new("#{attribute} param does not exist" )
   end 
 
-  def attribute_undefined!(attribute)
+  def undefined_attribute!(attribute)
     raise AttributeUndefinedException.new("#{attribute} is undefined")
   end
 

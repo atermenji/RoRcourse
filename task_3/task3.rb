@@ -6,28 +6,32 @@ end
 
 class Car
 
-	@@attributes = ["engine", "size", "turbo"]
-
 	attr_accessor :engine, :size, :turbo
 
 	def initialize(args = nil)
 		yield self if block_given?
 
-		args.each do |k,v|
-			unless @@attributes.include?("#{k}")
-				raise NoSuchAttributeException.new("#{k} param does not exist" )
-			end
+		args.each do |k, v|
+			no_such_attribute!(k) unless respond_to? k.to_sym
   			instance_variable_set("@#{k}", v) unless v.nil?
 		end if args.is_a? Hash
 	end
 
 	def engine_info
-		raise AttributeUndefinedException.new("Engine is undefined") if @engine == nil
-		raise AttributeUndefinedException.new("Size is undefined") if @size == nil
+		attribute_undefined!(:engine) if @engine == nil
+		attribute_undefined!(:size) if @size == nil
 			
 		return "Turbo #{@engine} engine #{@size.to_f}" if @turbo
 		return "#{size.to_f} #{@engine.capitalize} engine"
+	end
+
+	def no_such_attribute!(attribute)
+		raise NoSuchAttributeException.new("#{attribute} param does not exist" )
 	end	
+
+	def attribute_undefined!(attribute)
+		raise AttributeUndefinedException.new("#{attribute} is undefined")
+	end
 
 end
 
@@ -52,5 +56,5 @@ block_car = Car.new do |car|
 end
 puts "Init from block : #{block_car.engine_info}"
 
-# Car.new.engine_info		=> Engine is undefined (AttributeUndefinedException)
-# Car.new(ololo: true)		=> ololo param does not exist (NoSuchAttributeException)
+# Car.new.engine_info		# => Engine is undefined (AttributeUndefinedException)
+# Car.new(ololo: true)		# => ololo param does not exist (NoSuchAttributeException)
